@@ -7,6 +7,7 @@ import FaceRoundedIcon from '@mui/icons-material/FaceRounded';
 import { Button, Grid } from '@mui/material';
 import logo from '../images/logo.png';
 import title from '../images/title.png';
+import {registUser} from '../app/user';
 
 export function Signup(){
   const [name, setName] = useState('');
@@ -40,13 +41,17 @@ export function Signup(){
       alert('필수 항목을 모두 입력하세요');
       return;
     }
-    let param = {
+    let info = {
       userId: id,
       userName: name,
-      userPassword: password
+      userPwd: password
     }
 
     // register
+    registUser(info)
+      .then(res=> {
+        console.log(res)
+      })
     // then go to home
   }
 

@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://localhost:3001/profile',
 })
 
 // get profile sticker
 export function getProfileSticker(userId){
   return instance({
     method: 'get',
-    url: `/profile/getProfile/${userId}`
+    url: `/getProfile/${userId}`
   })
 }
 
@@ -16,7 +16,7 @@ export function getProfileSticker(userId){
 export function setProfileSticker(param){
   return instance({
     method: 'post',
-    url: `profile/setProfile`,
+    url: `/setProfile`,
     data: param
   })
 }
@@ -25,7 +25,7 @@ export function setProfileSticker(param){
 export function getPacakgeList(userId){
   return instance({
     method: 'get',
-    url: `/profile/getPackageList/${userId}`
+    url: `/getPackageList/${userId}`
   })
 }
 
@@ -33,6 +33,6 @@ export function getPacakgeList(userId){
 export function getPacakgeInfo(param){
   return instance({
     method: 'get',
-    url: `/profile/getPackageInfo/${param.userId}/${param.packageId}`
+    url: `/getPackageInfo/${param.userId}/${param.packageId}`
   })
 }
