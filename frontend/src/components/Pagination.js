@@ -19,7 +19,7 @@ export function Pagination(props){
   },[props])
 
   useEffect(()=>{
-    console.log(currentPage)
+    console.log("aaaaaaaaaa"+currentPage)
     if(props.data){
       setData(props.data.slice(currentPage*15, Math.min(currentPage*15+15, props.data.length)));
     }
@@ -47,7 +47,7 @@ export function Pagination(props){
           </IconButton>
         </Grid>
         <Grid item>
-          <List packages={data} />
+          <List packages={data} onChangeProfile={props.onChangeProfile}/>
         </Grid>
         <Grid item>
           <IconButton onClick={onNextPage} disabled={currentPage>=(maxSize/15)-1?true:false}> 
@@ -96,7 +96,7 @@ function List(props){/* props = 현재 페이지에 보여질 배열 */
                 items.map((item)=>{
                   return(
                     <Grid item key={item.packageId} m={2}>
-                      <ListItem packageInfo={item}/>
+                      <ListItem packageInfo={item} onChangeProfile={props.onChangeProfile}/>
                     </Grid>
                   )
                 })
@@ -108,7 +108,7 @@ function List(props){/* props = 현재 페이지에 보여질 배열 */
   );
 }
 
-function ListItem({packageInfo}){
+function ListItem({packageInfo, onChangeProfile}){
   const [packageItem, setPackageItem] = useState();
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState();
@@ -124,10 +124,11 @@ function ListItem({packageInfo}){
       userId: 2,
       packageId: packageInfo.packageId
     }
+
+    // 클릭한 패키지 정보 가져오기
     getPacakgeInfo(param)
       .then(res=>{
-        console.log(res);
-        //res.data.body.profileSticker[0].stickers //arr
+        // console.log(res);
         setInfo(res.data.body.profileSticker[0]);
         setModalOpen(true);
       })
@@ -140,7 +141,7 @@ function ListItem({packageInfo}){
   return(
     <div>
       <img src={packageItem} width={'150px'} onClick={clickPackage}/>
-      <Modal open={modalOpen} info={info} close={onClose}/>
+      <Modal open={modalOpen} info={info} close={onClose}  onChangeProfile={onChangeProfile}/>
     </div>
   );
 }

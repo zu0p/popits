@@ -9,23 +9,53 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useThemeProps } from '@mui/material';
 import { Pagination } from './Pagination';
+import { setProfileSticker } from '../app/profile';
 
 export function Modal(props){
   const [info, setInfo] = useState();
+  const [selectProfile, setSelectProfile] = useState();
 
   useEffect(()=>{
-    console.log(props)
     if(props.open){
       setInfo(props.info)
     }
   },[props])
 
-  useEffect(()=>{
-    console.log(info)
-  },[info])
-
   const onClose = () => {
     props.close()
+  }
+
+  const onSelectSticker = (item,e) => {
+    if(selectProfile){
+      const prevSticker = document.getElementById(selectProfile.id);
+      prevSticker.style.border = 'none';
+    }
+    let sticker = {
+      id: item.stickerId,
+      img: item.stickerImg
+    }
+    setSelectProfile(sticker);
+  }
+
+  useEffect(()=>{
+    if(selectProfile){
+      // console.log(selectProfile.id)
+      const selectedSticker = document.getElementById(selectProfile.id);
+      selectedSticker.style.border = 'solid 3px red';
+    }
+  }, [selectProfile])
+
+  const onSetProfile = () => { 
+    let param = {
+      userId: 2,
+      stickerId: selectProfile.id
+    }
+    setProfileSticker(param)
+      .then(res=>{
+        // console.log(res)
+        props.onChangeProfile(selectProfile.img)
+        onClose()
+      })
   }
 
   return (
@@ -38,51 +68,32 @@ export function Modal(props){
           {info?.packageName}
         </DialogTitle>
         <DialogContent>
-          <Grid 
-            container
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid container spacing={"20"}>
             <Grid item xs={2}>
-              <img src={info?.packageImg} width={'200px'}/>
+              <img src={info?.packageImg} width={'200px'} />
             </Grid>
-            <Grid item xs={10}>
-              <div style={{overflow:'auto'}}>
-                {
-                  info?.stickers.map((item, idx)=>{
-                    let res;
-                    if(idx%4==0){
-                      res += (<Grid 
-                        container
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        key={idx}
-                        m={2}
-                      >)
-                    }
-                    res+=(<Grid item>
-                      <img src={item.stickerImg} />
-                    </Grid>)
-                    if(idx%4==3 || idx==info?.stickers.length){
-                      res+=(</Grid>)
-                    }
-
-                    return res;
+            <Grid item xs={16}>
+              <Grid container spacing={2}>
+              {
+                  info?.stickers.map((item, idx) => {
+                    return (
+                      <Grid key= {idx} item>
+                        <img id={item.stickerId} src={item.stickerImg} width={"100px"} onClick={(e)=>{onSelectSticker(item, e)}}/>
+                      </Grid>
+                    )
                   })
                 }
-              </div>
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}><CloseIcon/></Button>
-          <Button onClick={onClose} autoFocus>
+          <Button onClick={onClose}><CloseIcon /></Button>
+          <Button onClick={onSetProfile} autoFocus>
             프로필 수정하기
           </Button>
         </DialogActions>
-      </Dialog>
-    </div>
+      </Dialog >
+    </div >
   );
 }
