@@ -2,11 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 var axios = require('axios');
+var {apikey} = require('../apikey');
 
 const instance = axios.create({
   baseURL: 'https://profile.stipop.io/v1/package',
   headers: { 
-    'apikey': '',
+    'apikey': apikey,
   }
 })
 
