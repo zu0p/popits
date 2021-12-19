@@ -5,14 +5,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import title from '../images/title.png';
 
 export function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="inherit">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Popits
+            <img src={title} width={'100px'}/>
           </Typography>
           
           <IconButton
@@ -22,7 +23,7 @@ export function Header() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <LogoutRoundedIcon />
+            <LogoutRoundedIcon style={{color:'#837f78'}} />
           </IconButton>
         </Toolbar>
       </AppBar>

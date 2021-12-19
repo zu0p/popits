@@ -13,13 +13,12 @@ export function Pagination(props){
 
   useEffect(()=>{
     if(props.data){
-      setData(props.data.slice(0,15));
+      setData(props.data.slice(currentPage*15, Math.min(currentPage*15+15, props.data.length)));
       setMaxSize(props.data.length);
     }
   },[props])
 
   useEffect(()=>{
-    console.log("aaaaaaaaaa"+currentPage)
     if(props.data){
       setData(props.data.slice(currentPage*15, Math.min(currentPage*15+15, props.data.length)));
     }
@@ -41,17 +40,17 @@ export function Pagination(props){
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item>
+        <Grid item >
           <IconButton onClick={onPrevPage} disabled={currentPage<1?true:false}> 
-            <ArrowBackIosRoundedIcon/> 
+            <ArrowBackIosRoundedIcon fontSize={'large'}/> 
           </IconButton>
         </Grid>
         <Grid item>
           <List packages={data} onChangeProfile={props.onChangeProfile}/>
         </Grid>
-        <Grid item>
+        <Grid item >
           <IconButton onClick={onNextPage} disabled={currentPage>=(maxSize/15)-1?true:false}> 
-            <ArrowForwardIosRoundedIcon /> 
+            <ArrowForwardIosRoundedIcon fontSize={"large"}/> 
           </IconButton>
         </Grid>
       </Grid>

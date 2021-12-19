@@ -38,7 +38,7 @@ export function Profile(){
     <div>
       <Header />
       <Grid container>
-        <Grid item xs={3} mt={5}>
+        <Grid item xs={3} mt={10}>
           <div>
             <img src={profile} width={'200px'}/>
           </div>
@@ -46,7 +46,7 @@ export function Profile(){
             사용자 이름
           </div>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={9} mt={6}>
           <Pagination data={packages} onChangeProfile={setProfile}/>
         </Grid>
       </Grid>

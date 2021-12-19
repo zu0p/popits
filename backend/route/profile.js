@@ -1,8 +1,8 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
-var axios = require('axios');
-var {apikey} = require('../apikey');
+import axios from 'axios';
+import apikey from '../apikey.js';
 
 const instance = axios.create({
   baseURL: 'https://profile.stipop.io/v1/package',
@@ -74,5 +74,4 @@ router.get('/getPackageInfo/:userId/:packageId', function(req, res){
     })
 })
 
-
-module.exports = router;
+export default router;

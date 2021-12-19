@@ -41,7 +41,7 @@ export function Modal(props){
     if(selectProfile){
       // console.log(selectProfile.id)
       const selectedSticker = document.getElementById(selectProfile.id);
-      selectedSticker.style.border = 'solid 3px red';
+      selectedSticker.style.border = 'solid 3px #568E61';
     }
   }, [selectProfile])
 
@@ -65,15 +65,20 @@ export function Modal(props){
         onClose={onClose}
       >
         <DialogTitle id="alert-dialog-title">
-          {info?.packageName}
+          <h2 style={{color:'#837f78'}}>{info?.packageName}</h2>
         </DialogTitle>
         <DialogContent>
-          <Grid container spacing={"20"}>
-            <Grid item xs={2}>
-              <img src={info?.packageImg} width={'200px'} />
+          <Grid 
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-start"
+          >
+            <Grid item xs={4}>
+              <img src={info?.packageImg} width={'160px'} />
             </Grid>
-            <Grid item xs={16}>
-              <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Grid container spacing={2} style={{overflowY: 'auto', overflowX: 'hidden', width: '100%', height: '400px'}}>
               {
                   info?.stickers.map((item, idx) => {
                     return (
@@ -88,10 +93,10 @@ export function Modal(props){
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}><CloseIcon /></Button>
           <Button onClick={onSetProfile} autoFocus>
             프로필 수정하기
           </Button>
+          <Button onClick={onClose}><CloseIcon /></Button>
         </DialogActions>
       </Dialog >
     </div >
